@@ -137,7 +137,11 @@ h1 {
   color: white; /* Ensure header text is visible on the transparent background */
   margin: 0; /* Remove default margin from h1 to prevent overlap */
   width: 100%;
-  text-align: center
+  text-align: center;
+
+  /* FIX for stacking context issue */
+  position: relative; 
+  z-index: 11; /* Set a z-index higher than the header's */
 } 
 
 /* Other styles you may have */
