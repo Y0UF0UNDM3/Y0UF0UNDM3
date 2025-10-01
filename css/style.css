@@ -1,7 +1,25 @@
-/* Sets the entire page background to black and text to white */
+/* Sets the entire page background to black */
 body {
   background-color: black;
   color: white; 
+  margin: 0; /* Remove default margin to have image at the very top */
+}
+
+/* New: Container for the header and image */
+.top-section {
+    position: relative; /* All absolutely positioned children will be relative to this */
+}
+
+/* New: Style the header that goes on top of the image */
+.overlay-header {
+    position: absolute; /* Positions the header relative to its parent */
+    top: 0; /* Align to the very top of the parent container */
+    left: 0; /* Align to the very left of the parent container */
+    width: 100%; /* Spans the full width of the parent container */
+    padding: 1rem 0; /* Adds some vertical space for the text */
+    text-align: center; /* Centers the header text */
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+    z-index: 10; /* Ensures the header stays on top of the image */
 }
 
 .poppins-thin {
@@ -116,7 +134,9 @@ h1 {
   font-family: "Poppins", sans-serif;
   font-weight: 900;
   font-style: normal;
-   width: 100%;
+  color: white; /* Ensure header text is visible on the transparent background */
+  margin: 0; /* Remove default margin from h1 to prevent overlap */
+  width: 100%;
   text-align: center
 } 
 
