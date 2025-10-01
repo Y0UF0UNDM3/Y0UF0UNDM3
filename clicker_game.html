@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clicker Game</title>
+    <link rel="stylesheet" href="css/style.css"> <!-- Reuse your existing stylesheet -->
+    <style>
+        /* Specific styles for the game page */
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+        #click-area {
+            width: 200px;
+            height: 200px;
+            background-color: #880000;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            transition: transform 0.1s ease;
+            user-select: none; /* Prevents text selection on rapid clicks */
+        }
+        #click-area:active {
+            transform: scale(0.95); /* Shrink on click for visual feedback */
+        }
+        #score {
+            font-size: 3rem;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body class="poppins-regular">
+    <div class="game-container">
+        <h1>Clicker Game</h1>
+        <div id="click-area">Click Me!</div>
+        <p>Score: <span id="score">0</span></p>
+        <a href="index.html" class="back-button">Back to main page</a>
+    </div>
+
+    <script>
+        let score = 0;
+        const clickArea = document.getElementById('click-area');
+        const scoreDisplay = document.getElementById('score');
+
+        clickArea.addEventListener('click', () => {
+            score++;
+            scoreDisplay.textContent = score;
+        });
+    </script>
+</body>
+</html>
