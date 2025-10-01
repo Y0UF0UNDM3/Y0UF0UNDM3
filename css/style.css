@@ -20,6 +20,18 @@ body {
     text-align: center; /* Centers the header text */
     background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
     z-index: 10; /* Ensures the header stays on top of the image */
+    
+    /* Make the transformation animate smoothly */
+    transition: transform 0.3s ease;
+    
+    /* Set the transformation origin to the top edge */
+    transform-origin: top;
+}
+
+/* Add the hover effect to expand the header */
+.overlay-header:hover {
+    /* Scale the header vertically to make it a bit taller */
+    transform: scaleY(1.2); /* Adjust the value for more or less stretch */
 }
 
 .poppins-thin {
