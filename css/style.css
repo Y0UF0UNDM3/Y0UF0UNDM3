@@ -114,3 +114,16 @@ h1 {
    width: 100%;
   text-align: center
 } 
+
+/* Other styles you may have */
+
+/* Style for the fading image */
+.fade-left {
+  /*
+  The mask-image property uses a linear gradient
+  that transitions from transparent on the left to black on the right.
+  Transparent parts of the mask hide the image, while black parts reveal it.
+  */
+  -webkit-mask-image: linear-gradient(to right, transparent, black 50%);
+  mask-image: linear-gradient(to right, transparent, black 50%);
+}
