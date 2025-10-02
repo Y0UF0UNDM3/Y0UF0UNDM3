@@ -62,7 +62,7 @@
 <body class="poppins-regular">
     <div class="game-container">
         <h1>Clicker Game</h1>
-        <img id="click-area" src="8209-chicken-chili-soup-cookinmama-4x3-1-6a55c91fcc054e59840aec6d93f63a75 (1).jpg" alt="Chili Pepper">
+        <img id="click-area" src="images/chili_soup.png" alt="Bowl of Chili Soup">
         <p>Score: <span id="score">0</span></p>
 
         <div class="upgrade-bar">
@@ -82,22 +82,29 @@
         const scoreDisplay = document.getElementById('score');
         const upgradeButton = document.getElementById('upgrade-button');
 
+        // Function to update the button's appearance
+        function checkUpgradeStatus() {
+            if (score >= upgradeCost && !upgradePurchased) {
+                upgradeButton.disabled = false;
+                upgradeButton.classList.add('upgrade-available');
+            } else {
+                upgradeButton.disabled = true;
+                upgradeButton.classList.remove('upgrade-available');
+            }
+        }
+
         clickArea.addEventListener('click', () => {
             score++;
             scoreDisplay.textContent = score;
             
-            // Check for upgrade purchase condition
-            if (score >= upgradeCost && !upgradePurchased) {
-                upgradeButton.disabled = false;
-            }
+            // Check the upgrade status on every click
+            checkUpgradeStatus();
 
-            // Apply animation if upgrade is purchased
             if (upgradePurchased) {
                 clickArea.style.animation = 'click-animation 0.3s ease';
             }
         });
 
-        // Listen for animation end to reset the animation
         clickArea.addEventListener('animationend', () => {
             clickArea.style.animation = '';
         });
@@ -107,10 +114,17 @@
                 score -= upgradeCost;
                 scoreDisplay.textContent = score;
                 upgradePurchased = true;
-                upgradeButton.textContent = 'Upgrade Unlocked!';
-                upgradeButton.disabled = true;
+                
+                // Hide the button after purchase
+                upgradeButton.style.display = 'none';
+
+                // We can also hide the entire upgrade bar if there's only one upgrade
+                // upgradeButton.parentNode.style.display = 'none';
             }
         });
+
+        // Initial check when the page loads
+        checkUpgradeStatus();
     </script>
     <style>
         @keyframes click-animation {
@@ -118,22 +132,14 @@
             50% { transform: scale(1.1); }
             100% { transform: scale(1); }
         }
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px #fff; }
+            50% { box-shadow: 0 0 20px #fff; }
+            100% { box-shadow: 0 0 5px #fff; }
+        }
+        .upgrade-available {
+            animation: glow 1.5s infinite ease-in-out;
+        }
     </style>
 </body>
 </html>
-
-<style>
-    /* ... existing styles ... */
-
-    /* Animation for the glowing effect */
-    @keyframes glow {
-        0% { box-shadow: 0 0 5px #fff; }
-        50% { box-shadow: 0 0 20px #fff; }
-        100% { box-shadow: 0 0 5px #fff; }
-    }
-    
-    /* Class for the upgrade button when it's available */
-    .upgrade-available {
-        animation: glow 1.5s infinite ease-in-out;
-    }
-</style>
