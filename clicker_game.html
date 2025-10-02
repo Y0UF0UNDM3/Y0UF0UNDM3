@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clicker Game</title>
-    <link rel="stylesheet" href="css/style.css"> <!-- Reuse your existing stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
     <style>
         /* Specific styles for the game page */
         body {
@@ -12,7 +12,8 @@
             color: white;
             font-family: "Poppins", sans-serif;
             margin: 0;
-            overflow: hidden; /* Hide overflow for the pinwheel */
+            overflow: hidden;
+            display: flex;
         }
         .pinwheel-background {
             position: fixed;
@@ -29,6 +30,7 @@
             animation: spin 30s linear infinite;
         }
         .game-container {
+            flex-grow: 1; /* Allows it to take up remaining space */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -104,6 +106,69 @@
             animation: confetti-fall 2s forwards;
             z-index: 5;
         }
+        .sidebar {
+            width: 300px;
+            background-color: rgba(0, 0, 0, 0.8);
+            height: 100vh;
+            overflow-y: auto;
+            position: fixed;
+            right: 0;
+            top: 0;
+            padding: 15px;
+            box-sizing: border-box;
+            border-left: 2px solid white;
+        }
+        .news-ticker {
+            width: 100%;
+            overflow: hidden;
+            border: 1px solid white;
+            padding: 5px;
+            height: 40px;
+            box-sizing: border-box;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .news-ticker-text {
+            display: inline-block;
+            animation: ticker-scroll 20s linear infinite;
+        }
+        .upgrade-building-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            border: 1px solid white;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .upgrade-building-item:hover:not(.disabled) {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .upgrade-building-item.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .building-details {
+            margin-left: 10px;
+        }
+        .building-details h3 {
+            margin: 0;
+        }
+        .building-details p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+        .cps-display {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            font-size: 1.5rem;
+            color: white;
+            z-index: 30;
+        }
         
         @keyframes confetti-fall {
             0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
@@ -126,6 +191,10 @@
         .upgrade-available {
             animation: glow 1.5s infinite ease-in-out;
         }
+        @keyframes ticker-scroll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
     </style>
 </head>
 <body class="poppins-regular">
@@ -147,18 +216,60 @@
         <a href="index.html" class="back-button game-button">Back to main page</a>
     </div>
 
+    <div class="sidebar">
+        <div class="news-ticker">
+            <span class="news-ticker-text">Welcome to the Chili Clicker Game! More hot content coming soon!</span>
+        </div>
+        <h2>Buildings</h2>
+        <div id="building-upgrades">
+            <div class="upgrade-building-item disabled" data-building="cursor">
+                <div class="building-details">
+                    <h3>Cursor</h3>
+                    <p>Cost: <span class="building-cost">15</span></p>
+                    <p>CPS: 0.1</p>
+                    <p>Count: <span class="building-count">0</span></p>
+                </div>
+            </div>
+            <div class="upgrade-building-item disabled" data-building="chef">
+                <div class="building-details">
+                    <h3>Chef</h3>
+                    <p>Cost: <span class="building-cost">100</span></p>
+                    <p>CPS: 1</p>
+                    <p>Count: <span class="building-count">0</span></p>
+                </div>
+            </div>
+            <div class="upgrade-building-item disabled" data-building="factory">
+                <div class="building-details">
+                    <h3>Chili Factory</h3>
+                    <p>Cost: <span class="building-cost">1000</span></p>
+                    <p>CPS: 10</p>
+                    <p>Count: <span class="building-count">0</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cps-display">CPS: <span id="cps-value">0</span></div>
+
     <script>
         let score = 0;
+        let cps = 0;
         let upgrades = {
             smooth: { purchased: false, cost: 10, buttonId: 'upgrade-smooth' },
             faster: { purchased: false, cost: 50, buttonId: 'upgrade-faster' },
             confetti: { purchased: false, cost: 100, buttonId: 'upgrade-confetti' }
         };
+        const buildings = {
+            cursor: { cost: 15, cps: 0.1, count: 0 },
+            chef: { cost: 100, cps: 1, count: 0 },
+            factory: { cost: 1000, cps: 10, count: 0 }
+        };
 
         const clickArea = document.getElementById('click-area');
         const scoreDisplay = document.getElementById('score');
+        const cpsValue = document.getElementById('cps-value');
         const upgradeButtons = document.querySelectorAll('.upgrade-button');
-        const chiliImageSrc = '8209-chicken-chili-soup-cookinmama-4x3-1-6a55c91fcc054e59840aec6d93f63a75 (1).jpg'; // Use your existing image
+        const buildingUpgrades = document.getElementById('building-upgrades');
+        const chiliImageSrc = '8209-chicken-chili-soup-cookinmama-4x3-1-6a55c91fcc054e59840aec6d93f63a75 (1).jpg';
 
         function createConfetti(x, y) {
             const confettiPiece = document.createElement('div');
@@ -168,13 +279,43 @@
             confettiPiece.style.top = `${y}px`;
             confettiPiece.style.setProperty('--x', `${(Math.random() - 0.5) * 400}px`);
             confettiPiece.style.setProperty('--y', `${Math.random() * -500 - 100}px`);
-            
             document.body.appendChild(confettiPiece);
-            setTimeout(() => {
-                confettiPiece.remove();
-            }, 2000);
+            setTimeout(() => confettiPiece.remove(), 2000);
         }
-        
+
+        function updateBuildingDisplay() {
+            Object.keys(buildings).forEach(key => {
+                const building = buildings[key];
+                const item = buildingUpgrades.querySelector(`[data-building="${key}"]`);
+                if (item) {
+                    item.querySelector('.building-cost').textContent = Math.round(building.cost);
+                    item.querySelector('.building-count').textContent = building.count;
+                    if (score >= building.cost) {
+                        item.classList.remove('disabled');
+                    } else {
+                        item.classList.add('disabled');
+                    }
+                }
+            });
+        }
+
+        function calculateCps() {
+            let totalCps = 0;
+            Object.keys(buildings).forEach(key => {
+                const building = buildings[key];
+                totalCps += building.cps * building.count;
+            });
+            return totalCps;
+        }
+
+        function updateGame() {
+            score += cps;
+            scoreDisplay.textContent = Math.round(score);
+            cpsValue.textContent = cps.toFixed(1);
+            checkUpgradeStatus();
+            updateBuildingDisplay();
+        }
+
         function checkUpgradeStatus() {
             Object.values(upgrades).forEach(upgrade => {
                 const button = document.getElementById(upgrade.buttonId);
@@ -194,47 +335,43 @@
             const upgradeData = upgrades[upgradeId];
             if (score >= upgradeData.cost) {
                 score -= upgradeData.cost;
-                scoreDisplay.textContent = score;
                 upgradeData.purchased = true;
-                
                 const button = document.getElementById(upgradeData.buttonId);
-                if (button) {
-                    button.style.display = 'none';
-                }
-                
+                if (button) button.style.display = 'none';
+                if (upgradeId === 'confetti') { /* Confetti logic will be handled in the click event */ }
                 checkUpgradeStatus();
+            }
+        }
+
+        function handleBuildingPurchase(buildingType) {
+            const building = buildings[buildingType];
+            if (score >= building.cost) {
+                score -= building.cost;
+                building.count++;
+                building.cost = Math.round(building.cost * 1.15); // Increase cost for next purchase
+                cps = calculateCps();
+                updateBuildingDisplay();
+                updateGame();
             }
         }
 
         clickArea.addEventListener('click', (e) => {
             score++;
-            scoreDisplay.textContent = score;
-            
-            checkUpgradeStatus();
-
-            if (upgrades.smooth.purchased) {
-                clickArea.style.animation = 'click-animation 0.3s ease';
-            }
-            if (upgrades.confetti.purchased) {
-                for (let i = 0; i < 5; i++) {
-                    createConfetti(e.clientX, e.clientY);
-                }
-            }
+            if (upgrades.smooth.purchased) clickArea.style.animation = 'click-animation 0.3s ease';
+            if (upgrades.confetti.purchased) for (let i = 0; i < 5; i++) createConfetti(e.clientX, e.clientY);
+            updateGame();
         });
 
-        clickArea.addEventListener('animationend', () => {
-            clickArea.style.animation = '';
+        clickArea.addEventListener('animationend', () => clickArea.style.animation = '');
+        upgradeButtons.forEach(button => button.addEventListener('click', () => handleUpgradePurchase(button.id.replace('upgrade-', ''))));
+        buildingUpgrades.addEventListener('click', (e) => {
+            const item = e.target.closest('.upgrade-building-item');
+            if (item && !item.classList.contains('disabled')) handleBuildingPurchase(item.dataset.building);
         });
 
-        upgradeButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const upgradeId = button.id.replace('upgrade-', '');
-                handleUpgradePurchase(upgradeId);
-            });
-        });
-
-        // Initialize button states on page load
+        setInterval(updateGame, 1000); // Update the game state every second
         checkUpgradeStatus();
+        updateBuildingDisplay();
     </script>
 </body>
 </html>
