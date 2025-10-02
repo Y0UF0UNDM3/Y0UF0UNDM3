@@ -8,8 +8,8 @@
     <style>
         /* General game page styles */
         body {
-            background-color: white; /* Changed background to white */
-            color: black; /* Changed text color to black for readability */
+            background-color: white;
+            color: black;
             font-family: "Poppins", sans-serif;
             margin: 0;
             overflow: hidden;
@@ -44,11 +44,12 @@
             position: relative;
             width: 220px;
             height: 220px;
-            border: 2px solid black; /* Changed border to black */
+            border: 4px solid black; /* Thicker border */
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Added box shadow */
         }
         #click-area {
             width: 200px;
@@ -70,7 +71,7 @@
         /* Left Sidebar: Owned Buildings */
         .building-display-sidebar {
             width: 250px;
-            background-color: rgba(255, 255, 255, 0.8); /* Changed background to white with opacity */
+            background-color: rgba(255, 255, 255, 0.9);
             height: 100vh;
             overflow-y: auto;
             position: fixed;
@@ -78,8 +79,9 @@
             top: 0;
             padding: 15px;
             box-sizing: border-box;
-            border-right: 2px solid black; /* Changed border to black */
-            color: black; /* Ensure text is readable */
+            border-right: 4px solid black; /* Thicker border */
+            color: black;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Added box shadow */
         }
         .building-owned-list {
             list-style: none;
@@ -91,14 +93,14 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
-            border: 1px solid black; /* Changed border to black */
+            border: 2px solid black; /* Thicker border */
             padding: 10px;
             border-radius: 5px;
         }
         /* Right Sidebar: Upgrades for sale */
         .sidebar {
             width: 300px;
-            background-color: rgba(255, 255, 255, 0.8); /* Changed background to white with opacity */
+            background-color: rgba(255, 255, 255, 0.9);
             height: 100vh;
             overflow-y: auto;
             position: fixed;
@@ -106,19 +108,20 @@
             top: 0;
             padding: 15px;
             box-sizing: border-box;
-            border-left: 2px solid black; /* Changed border to black */
-            color: black; /* Ensure text is readable */
+            border-left: 4px solid black; /* Thicker border */
+            color: black;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2); /* Added box shadow */
         }
         .upgrade-bar {
             margin-top: 40px;
             padding: 20px;
-            border: 1px solid black; /* Changed border to black */
+            border: 2px solid black; /* Thicker border */
             border-radius: 10px;
-            background-color: rgba(0, 0, 0, 0.1); /* Dark background for the bar itself */
+            background-color: rgba(0, 0, 0, 0.1);
         }
         .upgrade-bar button {
             background-color: rgba(0, 0, 0, 0.2);
-            border: 2px solid black; /* Changed border to black */
+            border: 2px solid black;
             color: white;
             padding: 10px 20px;
             font-size: 1.2rem;
@@ -139,7 +142,7 @@
         .news-ticker {
             width: 100%;
             overflow: hidden;
-            border: 1px solid black; /* Changed border to black */
+            border: 2px solid black; /* Thicker border */
             padding: 5px;
             height: 40px;
             box-sizing: border-box;
@@ -147,6 +150,7 @@
             display: flex;
             align-items: center;
             background-color: rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
         }
         .news-ticker-text {
             display: inline-block;
@@ -157,7 +161,7 @@
             display: flex;
             align-items: center;
             margin-bottom: 10px;
-            border: 1px solid black; /* Changed border to black */
+            border: 2px solid black; /* Thicker border */
             padding: 10px;
             border-radius: 5px;
             cursor: pointer;
@@ -189,8 +193,12 @@
             left: 50%;
             transform: translateX(-50%);
             font-size: 1.5rem;
-            color: black; /* Changed text to black */
+            color: black;
             z-index: 30;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 2px solid black;
+            padding: 5px 10px;
+            border-radius: 5px;
         }
         .confetti-piece {
             position: absolute;
@@ -214,12 +222,38 @@
             z-index: 2;
         }
         
+        /* Pinwheel Effect */
+        .pinwheel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: -1;
+            transform-origin: center;
+            animation: pinwheel-spin 30s linear infinite;
+        }
+        .pinwheel-arm {
+            position: absolute;
+            width: 50vw;
+            height: 50vw;
+            background-color: rgba(255, 0, 0, 0.1);
+            clip-path: polygon(0 0, 100% 0, 50% 50%);
+        }
+        .pinwheel-arm:nth-child(1) { transform: rotate(0deg); }
+        .pinwheel-arm:nth-child(2) { transform: rotate(90deg); }
+        .pinwheel-arm:nth-child(3) { transform: rotate(180deg); }
+        .pinwheel-arm:nth-child(4) { transform: rotate(270deg); }
+        
         /* Animations */
         @keyframes confetti-fall {
             0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
             100% { transform: translate(var(--x), var(--y)) scale(0) rotate(720deg); opacity: 0; }
         }
-        @keyframes spin {
+        @keyframes pinwheel-spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
@@ -229,7 +263,7 @@
             100% { transform: scale(1); }
         }
         @keyframes glow {
-            0% { box-shadow: 0 0 5px #000; } /* Changed glow to a dark color */
+            0% { box-shadow: 0 0 5px #000; }
             50% { box-shadow: 0 0 20px #000; }
             100% { box-shadow: 0 0 5px #000; }
         }
@@ -240,7 +274,12 @@
     </style>
 </head>
 <body class="poppins-regular">
-    <div class="pinwheel-background"></div>
+    <div class="pinwheel">
+        <div class="pinwheel-arm"></div>
+        <div class="pinwheel-arm"></div>
+        <div class="pinwheel-arm"></div>
+        <div class="pinwheel-arm"></div>
+    </div>
     <div class="building-display-sidebar">
         <h2>Owned Buildings</h2>
         <ul id="building-owned-list" class="building-owned-list">
@@ -250,7 +289,7 @@
     <div class="game-container">
         <h1>Clicker Game</h1>
         <div class="click-area-box">
-            <img id="click-area" src="8209-chicken-chili-soup-cookinmama-4x3-1-6a55c91fcc054e59840aec6d93f63a75 (1).jpg" alt="Bowl of Chili Soup">
+            <img id="click-area" src="chili.jpg" alt="Bowl of Chili Soup">
         </div>
         <p>Score: <span id="score">0</span></p>
     </div>
@@ -293,7 +332,8 @@
         </div>
     </div>
     <div class="cps-display">CPS: <span id="cps-value">0</span></div>
-    <a href="index.html" class="back-button game-button">Back to main page</a>
+    
+    <a href="index.html" class="back-button-footer">Back to homepage</a>
 
     <script>
         let score = 0;
@@ -315,11 +355,11 @@
         const upgradeButtons = document.querySelectorAll('.upgrade-button');
         const buildingUpgrades = document.getElementById('building-upgrades');
         const buildingOwnedList = document.getElementById('building-owned-list');
-        const chiliImageSrc = '8209-chicken-chili-soup-cookinmama-4x3-1-6a55c91fcc054e59840aec6d93f63a75 (1).jpg';
+        const chiliImageSrc = 'chili.jpg';
         
         const cursorContainer = document.querySelector('.game-container');
         const cursors = [];
-
+        
         function createCursor() {
             const cursorDiv = document.createElement('div');
             cursorDiv.classList.add('cursor-anim');
