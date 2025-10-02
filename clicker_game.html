@@ -12,9 +12,9 @@
             color: black;
             font-family: "Poppins", sans-serif;
             margin: 0;
-            overflow: hidden;
             display: flex;
             justify-content: space-between;
+            overflow-x: hidden; /* Prevent horizontal scrollbar */
         }
         .pinwheel-background {
             position: fixed;
@@ -22,21 +22,43 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('5-Best-Gaming-Website-Templates-Design-Made-Easy (1).webp');
-            background-size: 50%;
-            background-repeat: no-repeat;
-            background-position: center;
-            opacity: 0.05;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             z-index: -1;
-            animation: spin 30s linear infinite;
+            overflow: hidden; /* Prevents overflow of pinwheel */
         }
+        .pinwheel {
+            position: relative;
+            width: 50vw;
+            height: 50vw;
+            transform-origin: center;
+            animation: pinwheel-spin 30s linear infinite;
+        }
+        .pinwheel-arm {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('placeholder_background_image.webp'); /* Placeholder */
+            background-size: cover;
+            background-repeat: no-repeat;
+            opacity: 0.1;
+            clip-path: polygon(0 0, 100% 0, 50% 50%);
+            top: 0;
+            left: 0;
+        }
+        .pinwheel-arm:nth-child(1) { transform: rotate(0deg); }
+        .pinwheel-arm:nth-child(2) { transform: rotate(90deg); }
+        .pinwheel-arm:nth-child(3) { transform: rotate(180deg); }
+        .pinwheel-arm:nth-child(4) { transform: rotate(270deg); }
+
         .game-container {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            min-height: 100vh;
             text-align: center;
             position: relative;
         }
@@ -44,12 +66,12 @@
             position: relative;
             width: 220px;
             height: 220px;
-            border: 4px solid black; /* Thicker border */
+            border: 4px solid black;
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Added box shadow */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
         #click-area {
             width: 200px;
@@ -67,7 +89,7 @@
             font-size: 3rem;
             margin-top: 20px;
         }
-        
+
         /* Left Sidebar: Owned Buildings */
         .building-display-sidebar {
             width: 250px;
@@ -79,9 +101,9 @@
             top: 0;
             padding: 15px;
             box-sizing: border-box;
-            border-right: 4px solid black; /* Thicker border */
+            border-right: 4px solid black;
             color: black;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Added box shadow */
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
         }
         .building-owned-list {
             list-style: none;
@@ -93,7 +115,7 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
-            border: 2px solid black; /* Thicker border */
+            border: 2px solid black;
             padding: 10px;
             border-radius: 5px;
         }
@@ -108,14 +130,14 @@
             top: 0;
             padding: 15px;
             box-sizing: border-box;
-            border-left: 4px solid black; /* Thicker border */
+            border-left: 4px solid black;
             color: black;
-            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2); /* Added box shadow */
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
         }
         .upgrade-bar {
             margin-top: 40px;
             padding: 20px;
-            border: 2px solid black; /* Thicker border */
+            border: 2px solid black;
             border-radius: 10px;
             background-color: rgba(0, 0, 0, 0.1);
         }
@@ -137,12 +159,12 @@
             cursor: not-allowed;
             opacity: 0.5;
         }
-        
+
         /* Other game element styles */
         .news-ticker {
             width: 100%;
             overflow: hidden;
-            border: 2px solid black; /* Thicker border */
+            border: 2px solid black;
             padding: 5px;
             height: 40px;
             box-sizing: border-box;
@@ -161,7 +183,7 @@
             display: flex;
             align-items: center;
             margin-bottom: 10px;
-            border: 2px solid black; /* Thicker border */
+            border: 2px solid black;
             padding: 10px;
             border-radius: 5px;
             cursor: pointer;
@@ -215,39 +237,28 @@
             position: absolute;
             width: 30px;
             height: 30px;
-            background-image: url('cursor.png'); /* Replace with your cursor image path */
+            background-image: url('placeholder_cursor.png'); /* Placeholder */
             background-size: contain;
             background-repeat: no-repeat;
             animation: click-cursor 0.6s infinite;
             z-index: 2;
         }
-        
-        /* Pinwheel Effect */
-        .pinwheel {
+
+        /* Back to homepage link styling */
+        .back-button-footer {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: -1;
-            transform-origin: center;
-            animation: pinwheel-spin 30s linear infinite;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 2px solid black;
+            color: black;
+            padding: 10px 20px;
+            font-size: 1rem;
+            text-decoration: none;
+            border-radius: 5px;
+            z-index: 40;
         }
-        .pinwheel-arm {
-            position: absolute;
-            width: 50vw;
-            height: 50vw;
-            background-color: rgba(255, 0, 0, 0.1);
-            clip-path: polygon(0 0, 100% 0, 50% 50%);
-        }
-        .pinwheel-arm:nth-child(1) { transform: rotate(0deg); }
-        .pinwheel-arm:nth-child(2) { transform: rotate(90deg); }
-        .pinwheel-arm:nth-child(3) { transform: rotate(180deg); }
-        .pinwheel-arm:nth-child(4) { transform: rotate(270deg); }
-        
+
         /* Animations */
         @keyframes confetti-fall {
             0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
@@ -274,11 +285,13 @@
     </style>
 </head>
 <body class="poppins-regular">
-    <div class="pinwheel">
-        <div class="pinwheel-arm"></div>
-        <div class="pinwheel-arm"></div>
-        <div class="pinwheel-arm"></div>
-        <div class="pinwheel-arm"></div>
+    <div class="pinwheel-background">
+        <div class="pinwheel">
+            <div class="pinwheel-arm"></div>
+            <div class="pinwheel-arm"></div>
+            <div class="pinwheel-arm"></div>
+            <div class="pinwheel-arm"></div>
+        </div>
     </div>
     <div class="building-display-sidebar">
         <h2>Owned Buildings</h2>
@@ -289,13 +302,13 @@
     <div class="game-container">
         <h1>Clicker Game</h1>
         <div class="click-area-box">
-            <img id="click-area" src="chili.jpg" alt="Bowl of Chili Soup">
+            <img id="click-area" src="placeholder_image.jpg" alt="Clickable Area"> <!-- Placeholder -->
         </div>
         <p>Score: <span id="score">0</span></p>
     </div>
     <div class="sidebar">
         <div class="news-ticker">
-            <span class="news-ticker-text">Welcome to the Chili Clicker Game! More hot content coming soon!</span>
+            <span class="news-ticker-text">Welcome to the Clicker Game! More content coming soon!</span>
         </div>
         <h2>Buildings</h2>
         <div id="building-upgrades">
@@ -317,7 +330,7 @@
             </div>
             <div class="upgrade-building-item disabled" data-building="factory">
                 <div class="building-details">
-                    <h3>Chili Factory</h3>
+                    <h3>Factory</h3>
                     <p>Cost: <span class="building-cost">1000</span></p>
                     <p>CPS: 10</p>
                     <p>Count: <span class="building-count">0</span></p>
@@ -332,7 +345,7 @@
         </div>
     </div>
     <div class="cps-display">CPS: <span id="cps-value">0</span></div>
-    
+
     <a href="index.html" class="back-button-footer">Back to homepage</a>
 
     <script>
@@ -355,11 +368,11 @@
         const upgradeButtons = document.querySelectorAll('.upgrade-button');
         const buildingUpgrades = document.getElementById('building-upgrades');
         const buildingOwnedList = document.getElementById('building-owned-list');
-        const chiliImageSrc = 'chili.jpg';
-        
+        const mainImageSrc = 'placeholder_image.jpg'; // Placeholder
+
         const cursorContainer = document.querySelector('.game-container');
         const cursors = [];
-        
+
         function createCursor() {
             const cursorDiv = document.createElement('div');
             cursorDiv.classList.add('cursor-anim');
@@ -372,7 +385,7 @@
         function createConfetti(x, y) {
             const confettiPiece = document.createElement('div');
             confettiPiece.classList.add('confetti-piece');
-            confettiPiece.style.backgroundImage = `url('${chiliImageSrc}')`;
+            confettiPiece.style.backgroundImage = `url('${mainImageSrc}')`;
             confettiPiece.style.left = `${x}px`;
             confettiPiece.style.top = `${y}px`;
             confettiPiece.style.setProperty('--x', `${(Math.random() - 0.5) * 400}px`);
