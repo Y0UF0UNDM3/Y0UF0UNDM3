@@ -6,506 +6,499 @@
     <title>Clicker Game</title>
     <link rel="stylesheet" href="css/style.css">
     <style>
-        /* General game page styles */[1]
-        body {[1]
-            background-color: white;[1]
-            color: black;[1]
-            font-family: "Poppins", sans-serif;[1]
-            margin: 0;[1]
-            display: flex;[1]
-            justify-content: space-between;[1]
-            overflow-x: hidden; /* Prevent horizontal scrollbar */[1]
-        }[1]
-        .pinwheel-background {[1]
-            position: fixed;[1]
-            top: 0;[1]
-            left: 0;[1]
-            width: 100%;[1]
-            height: 100%;[1]
-            display: flex;[1]
-            justify-content: center;[1]
-            align-items: center;[1]
-            z-index: -1;[1]
-            overflow: hidden; /* Prevents overflow of pinwheel */[1]
-        }[1]
-        .pinwheel {[1]
-            position: relative;[1]
-            width: 50vw;[1]
-            height: 50vw;[1]
-            transform-origin: center;[1]
-            animation: pinwheel-spin 30s linear infinite;[1]
-        }[1]
-        .pinwheel-arm {[1]
-            position: absolute;[1]
-            width: 100%;[1]
-            height: 100%;[1]
-            background-image: url('5-Best-Gaming-Website-Templates-Design-Made-Easy (1).webp');[1]
-            background-size: cover;[1]
-            background-repeat: no-repeat;[1]
-            opacity: 0.1;[1]
-            clip-path: polygon(0 0, 100% 0, 50% 50%);[1]
-            top: 0;[1]
-            left: 0;[1]
-        }[1]
-        .pinwheel-arm:nth-child(1) { transform: rotate(0deg); }[1]
-        .pinwheel-arm:nth-child(2) { transform: rotate(90deg); }[1]
-        .pinwheel-arm:nth-child(3) { transform: rotate(180deg); }[1]
-        .pinwheel-arm:nth-child(4) { transform: rotate(270deg); }[1]
+        /* General game page styles */
+        body {
+            background-color: white;
+            color: black;
+            font-family: "Poppins", sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: space-between;
+            overflow-x: hidden; /* Prevent horizontal scrollbar */
+        }
+        .pinwheel-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: -1;
+            overflow: hidden; /* Prevents overflow of pinwheel */
+        }
+        .pinwheel {
+            position: relative;
+            width: 50vw;
+            height: 50vw;
+            transform-origin: center;
+            animation: pinwheel-spin 30s linear infinite;
+        }
+        .pinwheel-arm {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('5-Best-Gaming-Website-Templates-Design-Made-Easy (1).webp');
+            background-size: cover;
+            background-repeat: no-repeat;
+            opacity: 0.1;
+            clip-path: polygon(0 0, 100% 0, 50% 50%);
+            top: 0;
+            left: 0;
+        }
+        .pinwheel-arm:nth-child(1) { transform: rotate(0deg); }
+        .pinwheel-arm:nth-child(2) { transform: rotate(90deg); }
+        .pinwheel-arm:nth-child(3) { transform: rotate(180deg); }
+        .pinwheel-arm:nth-child(4) { transform: rotate(270deg); }
 
-        .game-container {[1]
-            flex-grow: 1;[1]
-            display: flex;[1]
-            flex-direction: column;[1]
-            align-items: center;[1]
-            justify-content: center;[1]
-            min-height: 100vh;[1]
-            text-align: center;[1]
-            position: relative;[1]
-        }[1]
-        .click-area-box {[1]
-            position: relative;[1]
-            width: 220px;[1]
-            height: 220px;[1]
-            border: 4px solid black;[1]
-            border-radius: 10px;[1]
-            display: flex;[1]
-            align-items: center;[1]
-            justify-content: center;[1]
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);[1]
-        }[1]
-        #click-area {[1]
-            width: 200px;[1]
-            height: 200px;[1]
-            cursor: pointer;[1]
-            transition: transform 0.1s ease;[1]
-            user-select: none;[1]
-            position: relative;[1]
-            z-index: 1;[1]
-        }[1]
-        #click-area:active {[1]
-            transform: scale(0.95);[1]
-        }[1]
-        #score {[1]
-            font-size: 3rem;[1]
-            margin-top: 20px;[1]
-        }[1]
+        .game-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            position: relative;
+        }
+        .click-area-box {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            border: 4px solid black;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        #click-area {
+            width: 200px;
+            height: 200px;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+            user-select: none;
+            position: relative;
+            z-index: 1;
+        }
+        #click-area:active {
+            transform: scale(0.95);
+        }
+        #score {
+            font-size: 3rem;
+            margin-top: 20px;
+        }
 
-        /* Left Sidebar: Owned Buildings */[1]
-        .building-display-sidebar {[1]
-            width: 250px;[1]
-            background-color: rgba(255, 255, 255, 0.9);[1]
-            height: 100vh;[1]
-            overflow-y: auto;[1]
-            position: fixed;[1]
-            left: 0;[1]
-            top: 0;[1]
-            padding: 15px;[1]
-            box-sizing: border-box;[1]
-            border-right: 4px solid black;[1]
-            color: black;[1]
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);[1]
-        }[1]
-        .building-owned-list {[1]
-            list-style: none;[1]
-            padding: 0;[1]
-            margin: 0;[1]
-        }[1]
-        .building-owned-item {[1]
-            display: flex;[1]
-            justify-content: space-between;[1]
-            align-items: center;[1]
-            margin-bottom: 10px;[1]
-            border: 2px solid black;[1]
-            padding: 10px;[1]
-            border-radius: 5px;[1]
-        }[1]
-        /* Right Sidebar: Upgrades for sale */[1]
-        .sidebar {[1]
-            width: 300px;[1]
-            background-color: rgba(255, 255, 255, 0.9);[1]
-            height: 100vh;[1]
-            overflow-y: auto;[1]
-            position: fixed;[1]
-            right: 0;[1]
-            top: 0;[1]
-            padding: 15px;[1]
-            box-sizing: border-box;[1]
-            border-left: 4px solid black;[1]
-            color: black;[1]
-            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);[1]
-        }[1]
-        .upgrade-bar {[1]
-            margin-top: 40px;[1]
-            padding: 20px;[1]
-            border: 2px solid black;[1]
-            border-radius: 10px;[1]
-            background-color: rgba(0, 0, 0, 0.1);[1]
-        }[1]
-        .upgrade-bar button {[1]
-            background-color: rgba(0, 0, 0, 0.2);[1]
-            border: 2px solid black;[1]
-            color: white;[1]
-            padding: 10px 20px;[1]
-            font-size: 1.2rem;[1]
-            cursor: pointer;[1]
-            border-radius: 5px;[1]
-            transition: background-color 0.3s ease, transform 0.3s ease;[1]
-        }[1]
-        .upgrade-bar button:hover:not(:disabled) {[1]
-            background-color: rgba(0, 0, 0, 0.5);[1]
-            transform: scale(1.05);[1]
-        }[1]
-        .upgrade-bar button:disabled {[1]
-            cursor: not-allowed;[1]
-            opacity: 0.5;[1]
-        }[1]
+        /* Left Sidebar: Owned Buildings */
+        .building-display-sidebar {
+            width: 250px;
+            background-color: rgba(255, 255, 255, 0.9);
+            height: 100vh;
+            overflow-y: auto;
+            position: fixed;
+            left: 0;
+            top: 0;
+            padding: 15px;
+            box-sizing: border-box;
+            border-right: 4px solid black;
+            color: black;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+        }
+        .building-owned-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .building-owned-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            border: 2px solid black;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        /* Right Sidebar: Upgrades for sale */
+        .sidebar {
+            width: 300px;
+            background-color: rgba(255, 255, 255, 0.9);
+            height: 100vh;
+            overflow-y: auto;
+            position: fixed;
+            right: 0;
+            top: 0;
+            padding: 15px;
+            box-sizing: border-box;
+            border-left: 4px solid black;
+            color: black;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+        }
+        .upgrade-bar {
+            margin-top: 40px;
+            padding: 20px;
+            border: 2px solid black;
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+        .upgrade-bar button {
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 2px solid black;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .upgrade-bar button:hover:not(:disabled) {
+            background-color: rgba(0, 0, 0, 0.5);
+            transform: scale(1.05);
+        }
+        .upgrade-bar button:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
 
-        /* Other game element styles */[1]
-        .news-ticker {[1]
-            width: 100%;[1]
-            overflow: hidden;[1]
-            border: 2px solid black;[1]
-            padding: 5px;[1]
-            height: 40px;[1]
-            box-sizing: border-box;[1]
-            white-space: nowrap;[1]
-            display: flex;[1]
-            align-items: center;[1]
-            background-color: rgba(0, 0, 0, 0.1);[1]
-            margin-bottom: 20px;[1]
-        }[1]
-        .news-ticker-text {[1]
-            display: inline-block;[1]
-            animation: ticker-scroll 20s linear infinite;[1]
-            color: black;[1]
-        }[1]
-        .upgrade-building-item {[1]
-            display: flex;[1]
-            align-items: center;[1]
-            margin-bottom: 10px;[1]
-            border: 2px solid black;[1]
-            padding: 10px;[1]
-            border-radius: 5px;[1]
-            cursor: pointer;[1]
-            transition: background-color 0.3s ease;[1]
-            color: black;[1]
-        }[1]
-        .upgrade-building-item:hover:not(.disabled) {[1]
-            background-color: rgba(0, 0, 0, 0.1);[1]
-        }[1]
-        .upgrade-building-item.disabled {[1]
-            opacity: 0.5;[1]
-            cursor: not-allowed;[1]
-        }[1]
-        .building-details {[1]
-            margin-left: 10px;[1]
-        }[1]
-        .building-details h3 {[1]
-            margin: 0;[1]
-            color: black;[1]
-        }[1]
-        .building-details p {[1]
-            margin: 0;[1]
-            font-size: 0.9rem;[1]
-            color: black;[1]
-        }[1]
-        .cps-display {[1]
-            position: fixed;[1]
-            bottom: 20px;[1]
-            left: 50%;[1]
-            transform: translateX(-50%);[1]
-            font-size: 1.5rem;[1]
-            color: black;[1]
-            z-index: 30;[1]
-            background-color: rgba(255, 255, 255, 0.8);[1]
-            border: 2px solid black;[1]
-            padding: 5px 10px;[1]
-            border-radius: 5px;[1]
-        }[1]
-        .confetti-piece {[1]
-            position: absolute;[1]
-            width: 20px;[1]
-            height: 20px;[1]
-            background-size: contain;[1]
-            background-repeat: no-repeat;[1]
-            pointer-events: none;[1]
-            animation: confetti-fall 2s forwards;[1]
-            z-index: 5;[1]
-        }[1]
-        /* Cursor animation and styling */[1]
-        .cursor-anim {[1]
-            position: absolute;[1]
-            width: 30px;[1]
-            height: 30px;[1]
-            background-image: url('placeholder_cursor.png');[1]
-            background-size: contain;[1]
-            background-repeat: no-repeat;[1]
-            animation: click-cursor 0.6s infinite;[1]
-            z-index: 2;[1]
-        }[1]
+        /* Other game element styles */
+        .news-ticker {
+            width: 100%;
+            overflow: hidden;
+            border: 2px solid black;
+            padding: 5px;
+            height: 40px;
+            box-sizing: border-box;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .news-ticker-text {
+            display: inline-block;
+            animation: ticker-scroll 20s linear infinite;
+            color: black;
+        }
+        .upgrade-building-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            border: 2px solid black;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            color: black;
+        }
+        .upgrade-building-item:hover:not(.disabled) {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+        .upgrade-building-item.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .building-details {
+            margin-left: 10px;
+        }
+        .building-details h3 {
+            margin: 0;
+            color: black;
+        }
+        .building-details p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: black;
+        }
+        .cps-display {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5rem;
+            color: black;
+            z-index: 30;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 2px solid black;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .confetti-piece {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            pointer-events: none;
+            animation: confetti-fall 2s forwards;
+            z-index: 5;
+        }
+        /* Cursor animation and styling */
+        .cursor-anim {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-image: url('placeholder_cursor.png'); /* Replace with your cursor image path */
+            background-size: contain;
+            background-repeat: no-repeat;
+            animation: click-cursor 0.6s infinite;
+            z-index: 2;
+        }
 
-        /* Back to homepage link styling */[1]
-        .back-button-footer {[1]
-            position: fixed;[1]
-            bottom: 20px;[1]
-            right: 20px;[1]
-            background-color: rgba(0, 0, 0, 0.2);[1]
-            border: 2px solid black;[1]
-            color: black;[1]
-            padding: 10px 20px;[1]
-            font-size: 1rem;[1]
-            text-decoration: none;[1]
-            border-radius: 5px;[1]
-            z-index: 40;[1]
-        }[1]
+        /* Back to homepage link styling */
+        .back-button-footer {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 2px solid black;
+            color: black;
+            padding: 10px 20px;
+            font-size: 1rem;
+            text-decoration: none;
+            border-radius: 5px;
+            z-index: 40;
+        }
 
-        /* Animations */[1]
-        @keyframes confetti-fall {[1]
-            0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }[1]
-            100% { transform: translate(var(--x), var(--y)) scale(0) rotate(720deg); opacity: 0; }[1]
-        }[1]
-        @keyframes pinwheel-spin {[1]
-            0% { transform: rotate(0deg); }[1]
-            100% { transform: rotate(360deg); }[1]
-        }[1]
-        @keyframes click-animation {[1]
-            0% { transform: scale(1); }[1]
-            50% { transform: scale(1.1); }[1]
-            100% { transform: scale(1); }[1]
-        }[1]
-        @keyframes glow {[1]
-            0% { box-shadow: 0 0 5px #000; }[1]
-            50% { box-shadow: 0 0 20px #000; }[1]
-            100% { box-shadow: 0 0 5px #000; }[1]
-        }[1]
-        @keyframes ticker-scroll {[1]
-            0% { transform: translateX(100%); }[1]
-            100% { transform: translateX(-100%); }[1]
-        }[1]
+        /* Animations */
+        @keyframes confetti-fall {
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
+            100% { transform: translate(var(--x), var(--y)) scale(0) rotate(720deg); opacity: 0; }
+        }
+        @keyframes pinwheel-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes click-animation {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px #000; }
+            50% { box-shadow: 0 0 20px #000; }
+            100% { box-shadow: 0 0 5px #000; }
+        }
+        @keyframes ticker-scroll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
     </style>
 </head>
-<body class="poppins-regular">[1]
-    <div class="pinwheel-background">[1]
-        <div class="pinwheel">[1]
-            <div class="pinwheel-arm"></div>[1]
-            <div class="pinwheel-arm"></div>[1]
-            <div class="pinwheel-arm"></div>[1]
-            <div class="pinwheel-arm"></div>[1]
-        </div>[1]
-    </div>[1]
-    <div class="building-display-sidebar">[1]
-        <h2>Owned Buildings</h2>[1]
-        <ul id="building-owned-list" class="building-owned-list">[1]
-            <!-- Owned buildings will be dynamically added here -->[1]
-        </ul>[1]
-    </div>[1]
-    <div class="game-container">[1]
-        <h1>Clicker Game</h1>[1]
-        <div class="click-area-box">[1]
-            <img id="click-area" src="chili.jpg" alt="Clickable Area">[1]
-        </div>[1]
-        <p>Score: <span id="score">0</span></p>[1]
-    </div>[1]
-    <div class="sidebar">[1]
-        <div class="news-ticker">[1]
-            <span class="news-ticker-text">Welcome to the Clicker Game! More content coming soon!</span>[1]
-        </div>[1]
-        <h2>Buildings</h2>[1]
-        <div id="building-upgrades">[1]
-            <div class="upgrade-building-item disabled" data-building="cursor">[1]
-                <div class="building-details">[1]
-                    <h3>Cursor</h3>[1]
-                    <p>Cost: <span class="building-cost">15</span></p>[1]
-                    <p>CPS: 0.1</p>[1]
-                    <p>Count: <span class="building-count">0</span></p>[1]
-                </div>[1]
-            </div>[1]
-            <div class="upgrade-building-item disabled" data-building="chef">[1]
-                <div class="building-details">[1]
-                    <h3>Chef</h3>[1]
-                    <p>Cost: <span class="building-cost">100</span></p>[1]
-                    <p>CPS: 1</p>[1]
-                    <p>Count: <span class="building-count">0</span></p>[1]
-                </div>[1]
-            </div>[1]
-            <div class="upgrade-building-item disabled" data-building="factory">[1]
-                <div class="building-details">[1]
-                    <h3>Chili Factory</h3>[1]
-                    <p>Cost: <span class="building-cost">1000</span></p>[1]
-                    <p>CPS: 10</p>[1]
-                    <p>Count: <span class="building-count">0</span></p>[1]
-                </div>[1]
-            </div>[1]
-        </div>[1]
-        <h2>Upgrades</h2>[1]
-        <div class="upgrade-bar">[1]
-            <button id="upgrade-smooth" class="upgrade-button" data-cost="10" disabled>Smooth Clicks (10 Clicks)</button>[1]
-            <button id="upgrade-faster" class="upgrade-button" data-cost="50" disabled>Faster Clicks (50 Clicks)</button>[1]
-            <button id="upgrade-confetti" class="upgrade-button" data-cost="100" disabled>Confetti (100 Clicks)</button>[1]
-        </div>[1]
-    </div>[1]
-    <div class="cps-display">CPS: <span id="cps-value">0</span></div>[1]
+<body class="poppins-regular">
+    <div class="pinwheel-background">
+        <div class="pinwheel">
+            <div class="pinwheel-arm"></div>
+            <div class="pinwheel-arm"></div>
+            <div class="pinwheel-arm"></div>
+            <div class="pinwheel-arm"></div>
+        </div>
+    </div>
+    <div class="building-display-sidebar">
+        <h2>Owned Buildings</h2>
+        <ul id="building-owned-list" class="building-owned-list">
+            <!-- Owned buildings will be dynamically added here -->
+        </ul>
+    </div>
+    <div class="game-container">
+        <h1>Clicker Game</h1>
+        <div class="click-area-box">
+            <img id="click-area" src="8209-chicken-chili-soup-cookinmama-4x3-1-6a55c91fcc054e59840aec6d93f63a75 (1).jpg" alt="Bowl of Chili Soup">
+        </div>
+        <p>Score: <span id="score">0</span></p>
+    </div>
+    <div class="sidebar">
+        <div class="news-ticker">
+            <span class="news-ticker-text">Welcome to the Clicker Game! More hot content coming soon!</span>
+        </div>
+        <h2>Buildings</h2>
+        <div id="building-upgrades">
+            <div class="upgrade-building-item disabled" data-building="cursor">
+                <div class="building-details">
+                    <h3>Cursor</h3>
+                    <p>Cost: <span class="building-cost">15</span></p>
+                    <p>CPS: 0.1</p>
+                    <p>Count: <span class="building-count">0</span></p>
+                </div>
+            </div>
+            <div class="upgrade-building-item disabled" data-building="chef">
+                <div class="building-details">
+                    <h3>Chef</h3>
+                    <p>Cost: <span class="building-cost">100</span></p>
+                    <p>CPS: 1</p>
+                    <p>Count: <span class="building-count">0</span></p>
+                </div>
+            </div>
+            <div class="upgrade-building-item disabled" data-building="factory">
+                <div class="building-details">
+                    <h3>Chili Factory</h3>
+                    <p>Cost: <span class="building-cost">1000</span></p>
+                    <p>CPS: 10</p>
+                    <p>Count: <span class="building-count">0</span></p>
+                </div>
+            </div>
+        </div>
+        <h2>Upgrades</h2>
+        <div class="upgrade-bar">
+            <button id="upgrade-smooth" class="upgrade-button" data-cost="10" disabled>Smooth Clicks (10 Clicks)</button>
+            <button id="upgrade-faster" class="upgrade-button" data-cost="50" disabled>Faster Clicks (50 Clicks)</button>
+            <button id="upgrade-confetti" class="upgrade-button" data-cost="100" disabled>Confetti (100 Clicks)</button>
+        </div>
+    </div>
+    <div class="cps-display">CPS: <span id="cps-value">0</span></div>
 
-    <a href="index.html" class="back-button-footer">Back to homepage</a>[1]
+    <a href="index.html" class="back-button-footer">Back to homepage</a>
 
-    <script>[1]
-        let score = 0;[1]
-        let cps = 0;[1]
-        let upgrades = {[1]
-            smooth: { purchased: false, cost: 10, buttonId: 'upgrade-smooth' },[1]
-            faster: { purchased: false, cost: 50, buttonId: 'upgrade-faster' },[1]
-            confetti: { purchased: false, cost: 100, buttonId: 'upgrade-confetti' }[1]
-        };[1]
-        const buildings = {[1]
-            cursor: { baseCost: 15, cps: 0.1, count: 0, cost: 15 },[1]
-            chef: { baseCost: 100, cps: 1, count: 0, cost: 100 },[1]
-            factory: { baseCost: 1000, cps: 10, count: 0, cost: 1000 }[1]
-        };[1]
+    <script>
+        let score = 0;
+        let cps = 0;
+        let upgrades = {
+            smooth: { purchased: false, cost: 10, buttonId: 'upgrade-smooth' },
+            faster: { purchased: false, cost: 50, buttonId: 'upgrade-faster' },
+            confetti: { purchased: false, cost: 100, buttonId: 'upgrade-confetti' }
+        };
+        const buildings = {
+            cursor: { baseCost: 15, cps: 0.1, count: 0, cost: 15 },
+            chef: { baseCost: 100, cps: 1, count: 0, cost: 100 },
+            factory: { baseCost: 1000, cps: 10, count: 0, cost: 1000 }
+        };
 
-        const clickArea = document.getElementById('click-area');[1]
-        const scoreDisplay = document.getElementById('score');[1]
-        const cpsValue = document.getElementById('cps-value');[1]
-        const upgradeButtons = document.querySelectorAll('.upgrade-button');[1]
-        const buildingUpgrades = document.getElementById('building-upgrades');[1]
-        const buildingOwnedList = document.getElementById('building-owned-list');[1]
-        const mainImageSrc = 'chili.jpg';[1]
+        const clickArea = document.getElementById('click-area');
+        const scoreDisplay = document.getElementById('score');
+        const cpsValue = document.getElementById('cps-value');
+        const upgradeButtons = document.querySelectorAll('.upgrade-button');
+        const buildingUpgrades = document.getElementById('building-upgrades');
+        const buildingOwnedList = document.getElementById('building-owned-list');
+        const chiliImageSrc = '8209-chicken-chili-soup-cookinmama-4x3-1-6a55c91fcc054e59840aec6d93f63a75 (1).jpg';
+        
+        const cursorContainer = document.querySelector('.game-container');
+        const cursors = [];
 
-        const cursorContainer = document.querySelector('.game-container');[1]
-        const cursors = [];[1]
+        function createCursor() {
+            const cursorDiv = document.createElement('div');
+            cursorDiv.classList.add('cursor-anim');
+            cursorDiv.style.left = `${Math.random() * 50 + 25}%`;
+            cursorDiv.style.top = `${Math.random() * 50 + 25}%`;
+            cursorContainer.appendChild(cursorDiv);
+            cursors.push(cursorDiv);
+        }
 
-        function createCursor() {[1]
-            const cursorDiv = document.createElement('div');[1]
-            cursorDiv.classList.add('cursor-anim');[1]
-            cursorDiv.style.left = `${Math.random() * 50 + 25}%`;[1]
-            cursorDiv.style.top = `${Math.random() * 50 + 25}%`;[1]
-            cursorContainer.appendChild(cursorDiv);[1]
-            cursors.push(cursorDiv);[1]
-        }[1]
+        function createConfetti(x, y) {
+            const confettiPiece = document.createElement('div');
+            confettiPiece.classList.add('confetti-piece');
+            confettiPiece.style.backgroundImage = `url('${chiliImageSrc}')`;
+            confettiPiece.style.left = `${x}px`;
+            confettiPiece.style.top = `${y}px`;
+            confettiPiece.style.setProperty('--x', `${(Math.random() - 0.5) * 400}px`);
+            confettiPiece.style.setProperty('--y', `${Math.random() * -500 - 100}px`);
+            document.body.appendChild(confettiPiece);
+            setTimeout(() => confettiPiece.remove(), 2000);
+        }
 
-        function createConfetti(x, y) {[1]
-            const confettiPiece = document.createElement('div');[1]
-            confettiPiece.classList.add('confetti-piece');[1]
-            confettiPiece.style.backgroundImage = `url('${mainImageSrc}')`;[1]
-            confettiPiece.style.left = `${x}px`;[1]
-            confettiPiece.style.top = `${y}px`;[1]
-            confettiPiece.style.setProperty('--x', `${(Math.random() - 0.5) * 400}px`);[1]
-            confettiPiece.style.setProperty('--y', `${Math.random() * -500 - 100}px`);[1]
-            document.body.appendChild(confettiPiece);[1]
-            setTimeout(() => confettiPiece.remove(), 2000);[1]
-        }[1]
+        function updateBuildingDisplay() {
+            Object.keys(buildings).forEach(key => {
+                const building = buildings[key];
+                const item = buildingUpgrades.querySelector(`[data-building="${key}"]`);
+                if (item) {
+                    item.querySelector('.building-cost').textContent = Math.round(building.cost);
+                    item.querySelector('.building-count').textContent = building.count;
+                    if (score >= building.cost) {
+                        item.classList.remove('disabled');
+                    } else {
+                        item.classList.add('disabled');
+                    }
+                }
+            });
+        }
 
-        function updateBuildingDisplay() {[1]
-            Object.keys(buildings).forEach(key => {[1]
-                const building = buildings[key];[1]
-                const item = buildingUpgrades.querySelector(`[data-building="${key}"]`);[1]
-                if (item) {[1]
-                    item.querySelector('.building-cost').textContent = Math.round(building.cost);[1]
-                    item.querySelector('.building-count').textContent = building.count;[1]
-                    if (score >= building.cost) {[1]
-                        item.classList.remove('disabled');[1]
-                    } else {[1]
-                        item.classList.add('disabled');[1]
-                    }[1]
-                }[1]
-            });[1]
-        }[1]
+        function updateOwnedBuildings() {
+            buildingOwnedList.innerHTML = '';
+            Object.keys(buildings).forEach(key => {
+                const building = buildings[key];
+                if (building.count > 0) {
+                    const listItem = document.createElement('li');
+                    listItem.classList.add('building-owned-item');
+                    listItem.innerHTML = `<span>${key.charAt(0).toUpperCase() + key.slice(1)}:</span> <span>${building.count}</span>`;
+                    buildingOwnedList.appendChild(listItem);
+                }
+            });
+        }
 
-        function updateOwnedBuildings() {[1]
-            buildingOwnedList.innerHTML = '';[1]
-            Object.keys(buildings).forEach(key => {[1]
-                const building = buildings[key];[1]
-                if (building.count > 0) {[1]
-                    const listItem = document.createElement('li');[1]
-                    listItem.classList.add('building-owned-item');[1]
-                    listItem.innerHTML = `<span>${key.charAt(0).toUpperCase() + key.slice(1)}:</span> <span>${building.count}</span>`;[1]
-                    buildingOwnedList.appendChild(listItem);[1]
-                }[1]
-            });[1]
-        }[1]
+        function calculateCps() {
+            let totalCps = 0;
+            Object.keys(buildings).forEach(key => {
+                const building = buildings[key];
+                totalCps += building.cps * building.count;
+            });
+            return totalCps;
+        }
 
-        function calculateCps() {[1]
-            let totalCps = 0;[1]
-            Object.keys(buildings).forEach(key => {[1]
-                const building = buildings[key];[1]
-                totalCps += building.cps * building.count;[1]
-            });[1]
-            return totalCps;[1]
-        }[1]
+        function updateGame() {
+            score += cps;
+            scoreDisplay.textContent = Math.round(score);
+            cpsValue.textContent = cps.toFixed(1);
+            checkUpgradeStatus();
+            updateBuildingDisplay();
+        }
 
-        function updateGame() {[1]
-            score += cps;[1]
-            scoreDisplay.textContent = Math.round(score);[1]
-            cpsValue.textContent = cps.toFixed(1);[1]
-            checkUpgradeStatus();[1]
-            updateBuildingDisplay();[1]
-        }[1]
+        function checkUpgradeStatus() {
+            Object.values(upgrades).forEach(upgrade => {
+                const button = document.getElementById(upgrade.buttonId);
+                if (button) {
+                    if (score >= upgrade.cost && !upgrade.purchased) {
+                        button.disabled = false;
+                        button.classList.add('upgrade-available');
+                    } else {
+                        button.disabled = true;
+                        button.classList.remove('upgrade-available');
+                    }
+                }
+            });
+        }
 
-        function checkUpgradeStatus() {[1]
-            Object.values(upgrades).forEach(upgrade => {[1]
-                const button = document.getElementById(upgrade.buttonId);[1]
-                if (button) {[1]
-                    if (score >= upgrade.cost && !upgrade.purchased) {[1]
-                        button.disabled = false;[1]
-                        button.classList.add('upgrade-available');[1]
-                    } else {[1]
-                        button.disabled = true;[1]
-                        button.classList.remove('upgrade-available');[1]
-                    }[1]
-                }[1]
-            });[1]
-        }[1]
+        function handleUpgradePurchase(upgradeId) {
+            const upgradeData = upgrades[upgradeId];
+            if (score >= upgradeData.cost) {
+                score -= upgradeData.cost;
+                upgradeData.purchased = true;
+                const button = document.getElementById(upgradeData.buttonId);
+                if (button) button.style.display = 'none';
+                if (upgradeId === 'confetti') { /* Confetti logic handled in click event */ }
+                checkUpgradeStatus();
+            }
+        }
 
-        function handleUpgradePurchase(upgradeId) {[1]
-            const upgradeData = upgrades[upgradeId];[1]
-            if (score >= upgradeData.cost) {[1]
-                score -= upgradeData.cost;[1]
-                upgradeData.purchased = true;[1]
-                const button = document.getElementById(upgradeData.buttonId);[1]
-                if (button) button.style.display = 'none';[1]
-                if (upgradeId === 'confetti') { /* Confetti logic handled in click event */ }[1]
-                checkUpgradeStatus();[1]
-            }[1]
-        }[1]
+        function handleBuildingPurchase(buildingType) {
+            const building = buildings[buildingType];
+            if (score >= building.cost) {
+                score -= building.cost;
+                building.count++;
+                building.cost = Math.round(building.baseCost * Math.pow(1.15, building.count));
+                cps = calculateCps();
+                updateOwnedBuildings();
+                updateGame();
+                if (buildingType === 'cursor') {
+                    createCursor();
+                }
+            }
+        }
 
-        function handleBuildingPurchase(buildingType) {[1]
-            const building = buildings[buildingType];[1]
-            if (score >= building.cost) {[1]
-                score -= building.cost;[1]
-                building.count++;[1]
-                building.cost = Math.round(building.baseCost * Math.pow(1.15, building.count));[1]
-                cps = calculateCps();[1]
-                updateOwnedBuildings();[1]
-                updateGame();[1]
-                if (buildingType === 'cursor') {[1]
-                    createCursor();[1]
-                }[1]
-            }[1]
-        }[1]
+        clickArea.addEventListener('click', (e) => {
+            score++;
+            if (upgrades.smooth.purchased) clickArea.style.animation = 'click-animation 0.3s ease';
+            if (upgrades.confetti.purchased) for (let i = 0; i < 5; i++) createConfetti(e.clientX, e.clientY);
+            updateGame();
+        });
 
-        clickArea.addEventListener('click', (e) => {[1]
-            score++;[1]
-            if (upgrades.smooth.purchased) clickArea.style.animation = 'click-animation 0.3s ease';[1]
-            if (upgrades.confetti.purchased) for (let i = 0; i < 5; i++) createConfetti(e.clientX, e.clientY);[1]
-            updateGame();[1]
-        });[1]
+        clickArea.addEventListener('animationend', () => clickArea.style.animation = '');
+        upgradeButtons.forEach(button => button.addEventListener('click', () => handleUpgradePurchase(button.id.replace('upgrade-', ''))));
+        buildingUpgrades.addEventListener('click', (e) => {
+            const item = e.target.closest('.upgrade-building-item');
+            if (item && !item.classList.contains('disabled')) handleBuildingPurchase(item.dataset.building);
+        });
 
-        clickArea.addEventListener('animationend', () => clickArea.style.animation = '');[1]
-        upgradeButtons.forEach(button => button.addEventListener('click', () => handleUpgradePurchase(button.id.replace('upgrade-', ''))));[1]
-        buildingUpgrades.addEventListener('click', (e) => {[1]
-            const item = e.target.closest('.upgrade-building-item');[1]
-            if (item && !item.classList.contains('disabled')) handleBuildingPurchase(item.dataset.building);[1]
-        });[1]
-
-        setInterval(updateGame, 1000);[1]
-        checkUpgradeStatus();[1]
-        updateBuildingDisplay();[1]
-    </script>[1]
+        setInterval(updateGame, 1000);
+        checkUpgradeStatus();
+        updateBuildingDisplay();
+    </script>
 </body>
 </html>
-```[1]
-
-### Key Changes Explained[1]
-1.  **Layout**: The game features a central display area and two fixed sidebars on the left and right, similar to the *Cookie Clicker* layout [1].
-2.  **Back to Homepage Link**: A "Back to homepage" link is positioned at the bottom right of the page [1].
-3.  **Visual Effects**: The background includes a rotating pinwheel effect, created using multiple triangle shapes [1]. Confetti animation can also appear on clicks if the corresponding upgrade is purchased [1].
-4.  **Styling**: Elements like the click area, sidebars, and upgrade items have thicker borders and box shadows for better visual definition [1]. The design incorporates a chili theme with adjusted background colors for contrast [1].
