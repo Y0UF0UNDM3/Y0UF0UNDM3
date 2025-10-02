@@ -7,6 +7,27 @@
     <link rel="stylesheet" href="css/style.css"> <!-- Reuse your existing stylesheet -->
     <style>
         /* Specific styles for the game page */
+        body {
+            background-color: black;
+            color: white;
+            font-family: "Poppins", sans-serif;
+            margin: 0;
+            overflow: hidden; /* Hide overflow for the pinwheel */
+        }
+        .pinwheel-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('5-Best-Gaming-Website-Templates-Design-Made-Easy (1).webp');
+            background-size: 50%;
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0.05;
+            z-index: -1;
+            animation: spin 30s linear infinite;
+        }
         .game-container {
             display: flex;
             flex-direction: column;
@@ -14,16 +35,29 @@
             justify-content: center;
             height: 100vh;
             text-align: center;
+            position: relative;
+        }
+        .click-area-box {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            border: 2px solid white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         #click-area {
             width: 200px;
             height: 200px;
             cursor: pointer;
             transition: transform 0.1s ease;
-            user-select: none; /* Prevents text selection on rapid clicks */
+            user-select: none;
+            position: relative;
+            z-index: 1;
         }
         #click-area:active {
-            transform: scale(0.95); /* Shrink on click for visual feedback */
+            transform: scale(0.95);
         }
         #score {
             font-size: 3rem;
@@ -35,6 +69,9 @@
             border: 1px solid white;
             border-radius: 10px;
             background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
         .upgrade-bar button {
             background-color: rgba(255, 255, 255, 0.2);
@@ -57,76 +94,25 @@
         .back-button {
             margin-top: 20px;
         }
-    </style>
-</head>
-<body class="poppins-regular">
-    <div class="game-container">
-        <h1>Clicker Game</h1>
-        <img id="click-area" src="8209-chicken-chili-soup-cookinmama-4x3-1-6a55c91fcc054e59840aec6d93f63a75 (1).jpg" alt="Bowl of Chili Soup">
-        <p>Score: <span id="score">0</span></p>
-
-        <div class="upgrade-bar">
-            <h2>Upgrades</h2>
-            <button id="upgrade-button" disabled>Smooth Clicks (10 Clicks)</button>
-        </div>
-        
-        <a href="index.html" class="back-button game-button">Back to main page</a>
-    </div>
-
-    <script>
-        let score = 0;
-        let upgradePurchased = false;
-        const upgradeCost = 10;
-
-        const clickArea = document.getElementById('click-area');
-        const scoreDisplay = document.getElementById('score');
-        const upgradeButton = document.getElementById('upgrade-button');
-
-        // Function to update the button's appearance
-        function checkUpgradeStatus() {
-            if (score >= upgradeCost && !upgradePurchased) {
-                upgradeButton.disabled = false;
-                upgradeButton.classList.add('upgrade-available');
-            } else {
-                upgradeButton.disabled = true;
-                upgradeButton.classList.remove('upgrade-available');
-            }
+        .confetti-piece {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            pointer-events: none;
+            animation: confetti-fall 2s forwards;
+            z-index: 5;
         }
-
-        clickArea.addEventListener('click', () => {
-            score++;
-            scoreDisplay.textContent = score;
-            
-            // Check the upgrade status on every click
-            checkUpgradeStatus();
-
-            if (upgradePurchased) {
-                clickArea.style.animation = 'click-animation 0.3s ease';
-            }
-        });
-
-        clickArea.addEventListener('animationend', () => {
-            clickArea.style.animation = '';
-        });
-
-        upgradeButton.addEventListener('click', () => {
-            if (score >= upgradeCost) {
-                score -= upgradeCost;
-                scoreDisplay.textContent = score;
-                upgradePurchased = true;
-                
-                // Hide the button after purchase
-                upgradeButton.style.display = 'none';
-
-                // We can also hide the entire upgrade bar if there's only one upgrade
-                // upgradeButton.parentNode.style.display = 'none';
-            }
-        });
-
-        // Initial check when the page loads
-        checkUpgradeStatus();
-    </script>
-    <style>
+        
+        @keyframes confetti-fall {
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
+            100% { transform: translate(var(--x), var(--y)) scale(0) rotate(720deg); opacity: 0; }
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
         @keyframes click-animation {
             0% { transform: scale(1); }
             50% { transform: scale(1.1); }
@@ -141,5 +127,114 @@
             animation: glow 1.5s infinite ease-in-out;
         }
     </style>
+</head>
+<body class="poppins-regular">
+    <div class="pinwheel-background"></div>
+    <div class="game-container">
+        <h1>Clicker Game</h1>
+        <div class="click-area-box">
+            <img id="click-area" src="8209-chicken-chili-soup-cookinmama-4x3-1-6a55c91fcc054e59840aec6d93f63a75 (1).jpg" alt="Bowl of Chili Soup">
+        </div>
+        <p>Score: <span id="score">0</span></p>
+
+        <div class="upgrade-bar">
+            <h2>Upgrades</h2>
+            <button id="upgrade-smooth" class="upgrade-button" data-cost="10" disabled>Smooth Clicks (10 Clicks)</button>
+            <button id="upgrade-faster" class="upgrade-button" data-cost="50" disabled>Faster Clicks (50 Clicks)</button>
+            <button id="upgrade-confetti" class="upgrade-button" data-cost="100" disabled>Confetti (100 Clicks)</button>
+        </div>
+        
+        <a href="index.html" class="back-button game-button">Back to main page</a>
+    </div>
+
+    <script>
+        let score = 0;
+        let upgrades = {
+            smooth: { purchased: false, cost: 10, buttonId: 'upgrade-smooth' },
+            faster: { purchased: false, cost: 50, buttonId: 'upgrade-faster' },
+            confetti: { purchased: false, cost: 100, buttonId: 'upgrade-confetti' }
+        };
+
+        const clickArea = document.getElementById('click-area');
+        const scoreDisplay = document.getElementById('score');
+        const upgradeButtons = document.querySelectorAll('.upgrade-button');
+        const chiliImageSrc = '8209-chicken-chili-soup-cookinmama-4x3-1-6a55c91fcc054e59840aec6d93f63a75 (1).jpg'; // Use your existing image
+
+        function createConfetti(x, y) {
+            const confettiPiece = document.createElement('div');
+            confettiPiece.classList.add('confetti-piece');
+            confettiPiece.style.backgroundImage = `url('${chiliImageSrc}')`;
+            confettiPiece.style.left = `${x}px`;
+            confettiPiece.style.top = `${y}px`;
+            confettiPiece.style.setProperty('--x', `${(Math.random() - 0.5) * 400}px`);
+            confettiPiece.style.setProperty('--y', `${Math.random() * -500 - 100}px`);
+            
+            document.body.appendChild(confettiPiece);
+            setTimeout(() => {
+                confettiPiece.remove();
+            }, 2000);
+        }
+        
+        function checkUpgradeStatus() {
+            Object.values(upgrades).forEach(upgrade => {
+                const button = document.getElementById(upgrade.buttonId);
+                if (button) {
+                    if (score >= upgrade.cost && !upgrade.purchased) {
+                        button.disabled = false;
+                        button.classList.add('upgrade-available');
+                    } else {
+                        button.disabled = true;
+                        button.classList.remove('upgrade-available');
+                    }
+                }
+            });
+        }
+
+        function handleUpgradePurchase(upgradeId) {
+            const upgradeData = upgrades[upgradeId];
+            if (score >= upgradeData.cost) {
+                score -= upgradeData.cost;
+                scoreDisplay.textContent = score;
+                upgradeData.purchased = true;
+                
+                const button = document.getElementById(upgradeData.buttonId);
+                if (button) {
+                    button.style.display = 'none';
+                }
+                
+                checkUpgradeStatus();
+            }
+        }
+
+        clickArea.addEventListener('click', (e) => {
+            score++;
+            scoreDisplay.textContent = score;
+            
+            checkUpgradeStatus();
+
+            if (upgrades.smooth.purchased) {
+                clickArea.style.animation = 'click-animation 0.3s ease';
+            }
+            if (upgrades.confetti.purchased) {
+                for (let i = 0; i < 5; i++) {
+                    createConfetti(e.clientX, e.clientY);
+                }
+            }
+        });
+
+        clickArea.addEventListener('animationend', () => {
+            clickArea.style.animation = '';
+        });
+
+        upgradeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const upgradeId = button.id.replace('upgrade-', '');
+                handleUpgradePurchase(upgradeId);
+            });
+        });
+
+        // Initialize button states on page load
+        checkUpgradeStatus();
+    </script>
 </body>
 </html>
