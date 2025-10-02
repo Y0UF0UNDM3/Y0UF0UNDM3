@@ -8,8 +8,8 @@
     <style>
         /* General game page styles */
         body {
-            background-color: black;
-            color: white;
+            background-color: white; /* Changed background to white */
+            color: black; /* Changed text color to black for readability */
             font-family: "Poppins", sans-serif;
             margin: 0;
             overflow: hidden;
@@ -44,7 +44,7 @@
             position: relative;
             width: 220px;
             height: 220px;
-            border: 2px solid white;
+            border: 2px solid black; /* Changed border to black */
             border-radius: 10px;
             display: flex;
             align-items: center;
@@ -70,7 +70,7 @@
         /* Left Sidebar: Owned Buildings */
         .building-display-sidebar {
             width: 250px;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(255, 255, 255, 0.8); /* Changed background to white with opacity */
             height: 100vh;
             overflow-y: auto;
             position: fixed;
@@ -78,7 +78,8 @@
             top: 0;
             padding: 15px;
             box-sizing: border-box;
-            border-right: 2px solid white;
+            border-right: 2px solid black; /* Changed border to black */
+            color: black; /* Ensure text is readable */
         }
         .building-owned-list {
             list-style: none;
@@ -90,14 +91,14 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
-            border: 1px solid white;
+            border: 1px solid black; /* Changed border to black */
             padding: 10px;
             border-radius: 5px;
         }
         /* Right Sidebar: Upgrades for sale */
         .sidebar {
             width: 300px;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(255, 255, 255, 0.8); /* Changed background to white with opacity */
             height: 100vh;
             overflow-y: auto;
             position: fixed;
@@ -105,21 +106,19 @@
             top: 0;
             padding: 15px;
             box-sizing: border-box;
-            border-left: 2px solid white;
+            border-left: 2px solid black; /* Changed border to black */
+            color: black; /* Ensure text is readable */
         }
         .upgrade-bar {
             margin-top: 40px;
             padding: 20px;
-            border: 1px solid white;
+            border: 1px solid black; /* Changed border to black */
             border-radius: 10px;
-            background-color: rgba(255, 255, 255, 0.1);
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            background-color: rgba(0, 0, 0, 0.1); /* Dark background for the bar itself */
         }
         .upgrade-bar button {
-            background-color: rgba(255, 255, 255, 0.2);
-            border: 2px solid white;
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 2px solid black; /* Changed border to black */
             color: white;
             padding: 10px 20px;
             font-size: 1.2rem;
@@ -128,49 +127,45 @@
             transition: background-color 0.3s ease, transform 0.3s ease;
         }
         .upgrade-bar button:hover:not(:disabled) {
-            background-color: rgba(255, 255, 255, 0.5);
+            background-color: rgba(0, 0, 0, 0.5);
             transform: scale(1.05);
         }
         .upgrade-bar button:disabled {
             cursor: not-allowed;
             opacity: 0.5;
         }
-        .back-button {
-            margin-top: 20px;
-        }
-        .upgrade-available {
-            animation: glow 1.5s infinite ease-in-out;
-        }
         
         /* Other game element styles */
         .news-ticker {
             width: 100%;
             overflow: hidden;
-            border: 1px solid white;
+            border: 1px solid black; /* Changed border to black */
             padding: 5px;
             height: 40px;
             box-sizing: border-box;
             white-space: nowrap;
             display: flex;
             align-items: center;
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(0, 0, 0, 0.1);
         }
         .news-ticker-text {
             display: inline-block;
             animation: ticker-scroll 20s linear infinite;
+            color: black;
         }
         .upgrade-building-item {
             display: flex;
             align-items: center;
             margin-bottom: 10px;
-            border: 1px solid white;
+            border: 1px solid black; /* Changed border to black */
             padding: 10px;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            color: black;
         }
         .upgrade-building-item:hover:not(.disabled) {
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: rgba(0, 0, 0, 0.1);
         }
         .upgrade-building-item.disabled {
             opacity: 0.5;
@@ -181,10 +176,12 @@
         }
         .building-details h3 {
             margin: 0;
+            color: black;
         }
         .building-details p {
             margin: 0;
             font-size: 0.9rem;
+            color: black;
         }
         .cps-display {
             position: fixed;
@@ -192,7 +189,7 @@
             left: 50%;
             transform: translateX(-50%);
             font-size: 1.5rem;
-            color: white;
+            color: black; /* Changed text to black */
             z-index: 30;
         }
         .confetti-piece {
@@ -216,11 +213,6 @@
             animation: click-cursor 0.6s infinite;
             z-index: 2;
         }
-        @keyframes click-cursor {
-            0% { transform: scale(1) rotate(0deg); opacity: 1; }
-            50% { transform: scale(1.2) rotate(15deg); opacity: 0.8; }
-            100% { transform: scale(1) rotate(0deg); opacity: 1; }
-        }
         
         /* Animations */
         @keyframes confetti-fall {
@@ -237,9 +229,9 @@
             100% { transform: scale(1); }
         }
         @keyframes glow {
-            0% { box-shadow: 0 0 5px #fff; }
-            50% { box-shadow: 0 0 20px #fff; }
-            100% { box-shadow: 0 0 5px #fff; }
+            0% { box-shadow: 0 0 5px #000; } /* Changed glow to a dark color */
+            50% { box-shadow: 0 0 20px #000; }
+            100% { box-shadow: 0 0 5px #000; }
         }
         @keyframes ticker-scroll {
             0% { transform: translateX(100%); }
