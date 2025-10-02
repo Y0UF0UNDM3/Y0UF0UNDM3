@@ -94,7 +94,6 @@
             padding: 10px;
             border-radius: 5px;
         }
-
         /* Right Sidebar: Upgrades for sale */
         .sidebar {
             width: 300px;
@@ -206,6 +205,22 @@
             animation: confetti-fall 2s forwards;
             z-index: 5;
         }
+        /* Cursor animation and styling */
+        .cursor-anim {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-image: url('cursor.png'); /* Replace with your cursor image path */
+            background-size: contain;
+            background-repeat: no-repeat;
+            animation: click-cursor 0.6s infinite;
+            z-index: 2;
+        }
+        @keyframes click-cursor {
+            0% { transform: scale(1) rotate(0deg); opacity: 1; }
+            50% { transform: scale(1.2) rotate(15deg); opacity: 0.8; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
         
         /* Animations */
         @keyframes confetti-fall {
@@ -286,6 +301,7 @@
         </div>
     </div>
     <div class="cps-display">CPS: <span id="cps-value">0</span></div>
+    <a href="index.html" class="back-button game-button">Back to main page</a>
 
     <script>
         let score = 0;
@@ -296,9 +312,9 @@
             confetti: { purchased: false, cost: 100, buttonId: 'upgrade-confetti' }
         };
         const buildings = {
-            cursor: { cost: 15, cps: 0.1, count: 0 },
-            chef: { cost: 100, cps: 1, count: 0 },
-            factory: { cost: 1000, cps: 10, count: 0 }
+            cursor: { baseCost: 15, cps: 0.1, count: 0, cost: 15 },
+            chef: { baseCost: 100, cps: 1, count: 0, cost: 100 },
+            factory: { baseCost: 1000, cps: 10, count: 0, cost: 1000 }
         };
 
         const clickArea = document.getElementById('click-area');
@@ -308,6 +324,18 @@
         const buildingUpgrades = document.getElementById('building-upgrades');
         const buildingOwnedList = document.getElementById('building-owned-list');
         const chiliImageSrc = '8209-chicken-chili-soup-cookinmama-4x3-1-6a55c91fcc054e59840aec6d93f63a75 (1).jpg';
+        
+        const cursorContainer = document.querySelector('.game-container');
+        const cursors = [];
+
+        function createCursor() {
+            const cursorDiv = document.createElement('div');
+            cursorDiv.classList.add('cursor-anim');
+            cursorDiv.style.left = `${Math.random() * 50 + 25}%`;
+            cursorDiv.style.top = `${Math.random() * 50 + 25}%`;
+            cursorContainer.appendChild(cursorDiv);
+            cursors.push(cursorDiv);
+        }
 
         function createConfetti(x, y) {
             const confettiPiece = document.createElement('div');
@@ -399,10 +427,13 @@
             if (score >= building.cost) {
                 score -= building.cost;
                 building.count++;
-                building.cost = Math.round(building.cost * 1.15);
+                building.cost = Math.round(building.baseCost * Math.pow(1.15, building.count));
                 cps = calculateCps();
                 updateOwnedBuildings();
                 updateGame();
+                if (buildingType === 'cursor') {
+                    createCursor();
+                }
             }
         }
 
